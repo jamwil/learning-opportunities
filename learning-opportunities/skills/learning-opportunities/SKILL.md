@@ -7,7 +7,9 @@ license: CC-BY-4.0
 
 # Learning Opportunities
 
-> Invocation argument: $ARGUMENTS
+## Invocation arguments
+
+Some harnesses expose slash-command arguments as `$ARGUMENTS`. In pi, `/skill:learning-opportunities orient` is passed through as an appended `User: orient` line after the skill content. Treat either form as the invocation argument.
 
 ## Purpose
 
@@ -36,7 +38,7 @@ Keep offers brief and non-repetitive. One short sentence is enough.
 ## Scope
 
 This skill applies to:
-- Claude Code sessions (primary context)
+- pi, Claude Code, Codex, or other agentic coding sessions
 - Technical discussions in chat where code concepts are being explored
 - Any context where the user is learning through building
 
@@ -187,20 +189,22 @@ After exploring one instance, have them find a parallel:
 
 ## Orientation mode
 
-If this skill is invoked with the argument `orient` (i.e., `/learning-opportunities orient`), run a guided repo orientation exercise instead of the default exercise offer flow.
+If this skill is invoked with the argument `orient` — for example via `/skill:learning-opportunities orient` in pi, or via a harness that exposes `$ARGUMENTS=orient` — run a guided repo orientation exercise instead of the default exercise offer flow.
 
 ### Finding the orientation file
 
-Look for `resources/orientation.md` relative to this skill file at these locations, in order:
+Look for `resources/orientation.md` at these locations, in order:
 
-1. `.claude/skills/learning-opportunities/resources/orientation.md` (project level)
-2. `~/.claude/skills/learning-opportunities/resources/orientation.md` (user level)
+1. `.pi/skills/learning-opportunities/resources/orientation.md` (project level for pi)
+2. `~/.pi/agent/skills/learning-opportunities/resources/orientation.md` (user level for pi)
+3. `.claude/skills/learning-opportunities/resources/orientation.md` (project level fallback)
+4. `~/.claude/skills/learning-opportunities/resources/orientation.md` (user level fallback)
 
-If the file does not exist at either location, stop and tell the user:
+If the file does not exist at any of those locations, stop and tell the user:
 
-> "No orientation file found. Run `/orient:orient` first to generate one for this repo. It takes about 30 seconds."
+> "No orientation file found. Run `/skill:orient` first to generate one for this repo. It takes about 30 seconds."
 
-See [orient](https://github.com/mcmullarkey/orient) for the plugin that generates orientation files.
+See [orient](https://github.com/DrCatHicks/learning-opportunities/tree/main/orient) for the companion skill that generates orientation files.
 
 ### Running the orientation exercise
 

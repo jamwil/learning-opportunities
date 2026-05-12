@@ -1,0 +1,30 @@
+{
+  "name": "learning-opportunities-auto-pi",
+  "version": "1.0.1",
+  "description": "Pi extension that nudges the agent to offer learning exercises after successful git commits. Requires the learning-opportunities pi package.",
+  "license": "CC-BY-4.0",
+  "author": "Dr. Cat Hicks",
+  "homepage": "https://github.com/DrCatHicks/learning-opportunities",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DrCatHicks/learning-opportunities.git"
+  },
+  "keywords": [
+    "pi-package",
+    "learning",
+    "education",
+    "skill-development",
+    "expertise",
+    "learning-science",
+    "extension"
+  ],
+  "files": [
+    "extensions/",
+    "README.md"
+  ],
+  "pi": {
+    "extensions": [
+      "./extensions"
+    ]
+  }
+}

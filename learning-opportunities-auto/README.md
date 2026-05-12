@@ -1,46 +1,59 @@
 # learning-opportunities-auto
 
-A companion plugin for [learning-opportunities](../learning-opportunities/) that automatically detects good moments to offer learning exercises. Instead of relying on Claude to notice opportunities on its own, this plugin uses a `PostToolUse` hook to watch for significant code changes and nudge Claude to make the offer.
+A companion pi extension for [learning-opportunities](../learning-opportunities/) that automatically detects good moments to offer learning exercises.
 
-**Requires:** The `learning-opportunities` plugin must also be installed.
+Instead of relying on the model to notice opportunities on its own, this extension watches successful `bash` tool calls for `git commit` and nudges pi to consider whether the just-committed work is a good fit for a short learning exercise.
+
+**Requires:** the main `learning-opportunities` pi package should also be installed.
 
 ## How It Works
 
-The hook fires after every `Bash` tool use and checks whether the command was a `git commit`. After a successful commit, it nudges Claude to consider whether the work that was just committed is a good fit for a learning exercise — the `learning-opportunities` skill handles deciding what kind of exercise to offer based on the nature of the changes.
+When pi executes a successful `git commit` through the `bash` tool, this extension injects a hidden context nudge telling the model to consider offering a 10-15 minute learning exercise if the work involved things like:
 
-It respects the same session limits as the skill: no more than 2 offers per session, and it stops if the user declines.
+- new files or modules
+- schema changes
+- architectural decisions or refactors
+- unfamiliar patterns
+
+It caps itself at 2 offers per session and also stops after it detects a simple declined response such as `no`, `skip`, or `not now`.
 
 ## Installation
 
-1. Make sure you've already installed `learning-opportunities` from this marketplace.
+This extension is packaged separately inside this repository.
 
-2. Install this plugin:
-   ```
-   /plugin install learning-opportunities-auto@learning-opportunities
-   ```
-
-3. Reload:
-   ```
-   /plugin reload
+1. Clone the repo:
+   ```bash
+   git clone https://github.com/DrCatHicks/learning-opportunities.git
+   cd learning-opportunities
    ```
 
-## Windows Setup
+2. Install the main skills package:
+   ```bash
+   pi install .
+   ```
 
-On Linux, macOS, and WSL2, this plugin works out of the box. On native Windows, Claude Code runs hooks using `cmd.exe` by default, which cannot execute bash scripts. You need to tell Claude Code where to find bash.
+3. Install the auto extension package:
+   ```bash
+   pi install ./learning-opportunities-auto
+   ```
 
-Set the `CLAUDE_CODE_GIT_BASH_PATH` environment variable to point at your Git for Windows bash installation. The typical location is:
+4. If pi is already running, reload resources:
+   ```text
+   /reload
+   ```
 
-```
-CLAUDE_CODE_GIT_BASH_PATH=C:\Program Files\Git\bin\bash.exe
-```
+If you want to disable it later, use `pi config`.
 
-You can set this as a system environment variable, or add it to your shell profile before launching Claude Code.
+## Implementation Notes
 
-If you run into issues, check that `Git\bin` (not just `Git\cmd`) is on your PATH, or that the environment variable above is set correctly. This is a [known friction point](https://github.com/anthropics/claude-code/issues/16602) in Claude Code's Windows hook support. If you're not sure how to set an environment variable or update your PATH on Windows, ask Claude — it can walk you through it.
+- Pi version: implemented as an extension in `extensions/index.ts`
+- Trigger: `tool_result` event for successful `bash` executions matching `git commit`
+- Delivery: injects a hidden custom message before the model's next turn
+- State: stores offer/decline markers in session entries so behavior survives reloads
 
-## How Hooks Work
+## Claude Code
 
-This plugin uses Claude Code's [hooks system](https://docs.anthropic.com/en/docs/claude-code/hooks) to run a script after each tool use. The hook is declared in `hooks/hooks.json`, which Claude Code reads at plugin load time. The hook script itself lives at `hooks/post-tool-use.sh`. For more on writing and configuring hooks, see the official documentation.
+The original Claude Code hook implementation is still kept in this directory under `hooks/` for the Claude plugin version of this project.
 
 ## License
 

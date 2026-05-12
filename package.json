@@ -1,0 +1,33 @@
+{
+  "name": "learning-opportunities-pi",
+  "version": "1.0.0",
+  "description": "Pi package for science-based learning exercises and repo orientation during AI-assisted coding",
+  "license": "CC-BY-4.0",
+  "author": "Dr. Cat Hicks",
+  "homepage": "https://github.com/DrCatHicks/learning-opportunities",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DrCatHicks/learning-opportunities.git"
+  },
+  "keywords": [
+    "pi-package",
+    "learning",
+    "education",
+    "skill-development",
+    "expertise",
+    "learning-science",
+    "orientation"
+  ],
+  "files": [
+    "learning-opportunities/",
+    "orient/",
+    "README.md",
+    "LICENSE"
+  ],
+  "pi": {
+    "skills": [
+      "./learning-opportunities/skills",
+      "./orient/skills"
+    ]
+  }
+}

@@ -1,62 +1,81 @@
-# Learning Opportunities: A Claude Code Skill for Deliberate Skill Development
+# Learning Opportunities: Deliberate Skill Development for Pi
 
 **Build your expertise, not just your projects.**
 
-This skill uses an adaptive "dynamic textbook" approach to help you integrate science-based expertise building exercises while doing agentic coding.
+This repository now ships a native [pi](https://pi.dev) package for the `learning-opportunities` and `orient` skills, while keeping the existing Claude Code plugin marketplace files.
 
-When you complete architectural work (new files, schema changes, refactors), Claude offers optional 10-15 minute learning exercises grounded in evidence-based learning science. The exercises use techniques like prediction, generation, retrieval practice, and spaced repetition to provide you with semi-worked examples from across your own project work.
+The core skill uses an adaptive "dynamic textbook" approach to help you integrate science-based expertise building exercises while doing agentic coding. When you complete architectural work (new files, schema changes, refactors), the agent can offer optional 10-15 minute learning exercises grounded in evidence-based learning science. The exercises use techniques like prediction, generation, retrieval practice, and spaced repetition to provide you with semi-worked examples from across your own project work.
 
 Pairs well with [Learning-Goal](https://github.com/DrCatHicks/learning-goal), a skill that guides you through semi-structured, interactive learning goal-setting using the technique of Mental Contrasting with Implementation Intentions (MCII), an evidence-based exercise.
 
-
 ## Installation
 
-This repository is a [Claude Code plugin marketplace](https://docs.claude.com/en/docs/claude-code/plugins). To install:
+### Pi
+
+Install the pi package from this repo:
+
+```bash
+pi install https://github.com/DrCatHicks/learning-opportunities
+```
+
+This installs two skills:
+- `learning-opportunities`
+- `orient`
+
+You can invoke them explicitly with:
+
+```text
+/skill:learning-opportunities
+/skill:orient
+```
+
+To generate repo orientation lessons:
+
+```text
+/skill:orient
+# or
+/skill:orient showboat
+```
+
+Then run the orientation lesson flow with:
+
+```text
+/skill:learning-opportunities orient
+```
+
+### Automatic Prompting in Pi (Optional)
+
+The `learning-opportunities-auto` pi extension lives in the `learning-opportunities-auto/` subdirectory as a separate pi package. If you've cloned this repo locally, you can install it with:
+
+```bash
+pi install ./learning-opportunities-auto
+```
+
+It watches for successful `git commit` bash tool calls and nudges pi to consider offering a learning exercise. See [learning-opportunities-auto/README.md](./learning-opportunities-auto/README.md) for details.
+
+### Claude Code (still supported)
+
+This repository also remains a [Claude Code plugin marketplace](https://docs.claude.com/en/docs/claude-code/plugins). To install there:
 
 1. Add the marketplace:
    ```
    /plugin marketplace add https://github.com/DrCatHicks/learning-opportunities.git
    ```
 
-2. Install the plugin:
+2. Install the main plugin:
    ```
    /plugin install learning-opportunities@learning-opportunities
    ```
 
-3. Restart Claude Code to activate
- 
-For more on Claude Code plugins, see the [plugin documentation](https://docs.claude.com/en/docs/claude-code/plugins).
+3. Optionally install:
+   ```
+   /plugin install orient@learning-opportunities
+   /plugin install learning-opportunities-auto@learning-opportunities
+   ```
 
-### Automatic Prompting (Optional)
-
-Linux and macOS users can install `learning-opportunities-auto` alongside `learning-opportunities` to have Claude automatically consider offering an exercise after each git commit. Windows users can use it too — [a little setup is required](./learning-opportunities-auto/README.md#windows-setup).
-
-### Get Repo Orientation Lessons (Optional)
+4. Restart Claude Code to activate
 
 If you're learning a new repo you can create an `orientation.md` file with suggested lessons using the `orient` skill. The orientation approach applies strategies from empirical research on program comprehension and codebase navigation — including how expert developers sample codebases strategically rather than reading exhaustively. See the [orient bibliography](orient/skills/orient/resources/orient-bibliography.md) for the full source list.
-
-Install the orient plugin:
-```
-/plugin install orient@learning-opportunities
-```
-
-Navigate to the repo you want to orient yourself to, and call the `orient` skill either as default
-
-```
-/orient
-```
-
-Or using Simon Willison's `showboat` [tool](https://github.com/simonw/showboat)
-
-```
-/orient showboat
-```
-
-Then call `learning-opportunities` with the `orient` argument to get offered two lessons that will orient you to core features of the repo
-
-```
-/learning-opportunities orient
-```
 
 ## Why You Might Want to Experiment with This Skill
 
@@ -74,15 +93,15 @@ The techniques in SKILL.md are designed to counteract these risks by reintroduci
 - Deliberate pauses (spacing, reflection)
 - Explicit metacognition (self-assessment, gap identification)
 
-This skill interrupts that pattern by reminding you to consider investing in reflection and learning. It introduces a different "mode" of interacting with Claude, which will intentionally feel different than highly fluent and fast agentic coding in the service of helping you reflect and explore your generated work. This skill may be particularly useful for users who are experimenting with developing discrete projects with agentic coding that involve multiple unfamiliar languages, techniques, or architectural patterns. 
+This skill interrupts that pattern by reminding you to consider investing in reflection and learning. It introduces a different "mode" of interacting with your coding agent, which will intentionally feel different than highly fluent and fast agentic coding in the service of helping you reflect and explore your generated work. This skill may be particularly useful for users who are experimenting with developing discrete projects with agentic coding that involve multiple unfamiliar languages, techniques, or architectural patterns.
 
 ## How It Works
 
-After you complete significant work (which you can self-define, but I've suggested: creating new files or modules, database schema changes, architectural decisions or refactors, implementing unfamiliar patterns, any work where the user asked "why" questions during development. The key idea is to find a moment in your personal flow where a learning opportunity is most beneficial) Claude will ask:
+After you complete significant work (which you can self-define, but I've suggested: creating new files or modules, database schema changes, architectural decisions or refactors, implementing unfamiliar patterns, any work where the user asked "why" questions during development. The key idea is to find a moment in your personal flow where a learning opportunity is most beneficial) the agent will ask:
 
 > "Would you like to do a quick learning exercise on [topic]? About 10-15 minutes."
 
-If you accept, Claude runs you through an interactive exercise. A key design principle: **Claude pauses and waits for your input** rather than answering its own questions. This can feel frustrating, but this pushes against Claude's default to always provide the full answer and encourages your own mental effort and learning. You may encounter and need to design against Claude's defaults to provide the complete answer; please feel free let me know if you find gotchas or conflicts in your own workflow that you think will generalize to others so that I can incorporate in the Skill to improve this (e.g., I learned we needed to suppress prompt suggestions).
+If you accept, the agent runs you through an interactive exercise. A key design principle: **the agent pauses and waits for your input** rather than answering its own questions. This can feel frustrating, but this pushes against the default tendency of coding agents to provide the full answer and encourages your own mental effort and learning. You may encounter and need to design against those defaults; please feel free let me know if you find gotchas or conflicts in your own workflow that you think will generalize to others so that I can incorporate them into the skill.
 
 ### Exercise Types
 
@@ -96,7 +115,7 @@ If you accept, Claude runs you through an interactive exercise. A key design pri
 ### Will Not Suggest Learning Opportunities When...
 
 Two suppression conditions are currently suggested which can be adapted to your workflow needs. 
-Claude will not prompt learning opportunities when:
+The agent should not prompt learning opportunities when:
 - You've already declined an exercise this session
 - You've completed 2 exercises this session
 
@@ -124,7 +143,7 @@ The measures are free and open access under a CC-BY-SA 4.0 license. For the full
 This skill can be significantly refined and adapted. You might want to:
 
 - Include information about your own technical expertise and existing knowledge to start the exercises at the right level (e.g. known languages, learning goals)
-- Prompt Claude to include insights from the learning opportunities into your project Claude.md 
+- Prompt the agent to include insights from the learning opportunities into your project context file (`AGENTS.md` or `CLAUDE.md`)
 - Adjust trigger conditions for your workflow
 - Add project-specific examples to the exercises
 - Change the soft cap on exercises per session

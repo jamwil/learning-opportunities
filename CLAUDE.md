@@ -1,24 +1,27 @@
 # Learning Opportunities
 
-Last verified: 2026-03-03
+Last verified: 2026-05-11
 
 ## What This Is
 
-A Claude Code plugin packaging science-based learning exercises for deliberate skill development during AI-assisted coding. Author: Dr. Cat Hicks. License: CC-BY-4.0.
+A cross-harness skills repository packaging science-based learning exercises for deliberate skill development during AI-assisted coding. It now includes both Claude Code plugin manifests and pi package manifests. Authors: Dr. Cat Hicks and Dr. Michael Mullarkey. License: CC-BY-4.0.
 
 ## Project Structure
 
-- `.claude-plugin/marketplace.json` - Marketplace catalog (repo root is the marketplace)
-- `learning-opportunities/` - The skill plugin
-  - `.claude-plugin/plugin.json` - Plugin manifest
-  - `skills/learning-opportunities/` - The skill (SKILL.md + resources)
-- `learning-opportunities-auto/` - The auto-prompting hook plugin (requires `learning-opportunities`)
-  - `.claude-plugin/plugin.json` - Plugin manifest
-  - `scripts/post-tool-use.sh` - PostToolUse hook (bash)
-- `orient/` - The orientation generator plugin
-  - `.claude-plugin/plugin.json` - Plugin manifest
-  - `skills/orient/` - The skill (SKILL.md)
-- `CHANGELOG.md` - Release history
+- `package.json` - Root pi package manifest (`learning-opportunities` + `orient` skills)
+- `.claude-plugin/marketplace.json` - Claude Code marketplace catalog (repo root is the marketplace)
+- `learning-opportunities/` - Main skill package contents
+  - `.claude-plugin/plugin.json` - Claude plugin manifest
+  - `skills/learning-opportunities/` - Shared skill (SKILL.md + resources)
+- `learning-opportunities-auto/` - Auto-prompting add-on
+  - `package.json` - Separate pi package manifest for the extension
+  - `extensions/index.ts` - pi extension implementation
+  - `.claude-plugin/plugin.json` - Claude plugin manifest
+  - `hooks/post-tool-use.sh` - Claude PostToolUse hook (bash)
+- `orient/` - Orientation generator skill contents
+  - `.claude-plugin/plugin.json` - Claude plugin manifest
+  - `skills/orient/` - Shared skill (SKILL.md + resources)
+- `CHANGELOG.md` - Release history for the Claude plugin releases
 
 ## Releasing a New Version
 
